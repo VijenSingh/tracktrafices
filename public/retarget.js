@@ -10,11 +10,12 @@
 
 
     function createTrackingPixel(url) {
+        
         var img = document.createElement('img');
         img.src = url;
         img.style.width = '1px';
         img.style.height = '1px';
-        img.style.display = 'none';
+        img.style.display = 'none';  
         img.style.visibility = 'hidden';
         
         document.body.appendChild(img);
@@ -40,6 +41,7 @@
                 }),
                 headers: {
                     'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin':'*'
                 }
             });
 

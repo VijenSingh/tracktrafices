@@ -134,10 +134,12 @@ app.post("/api/scriptdata", async (req, res) => {
   const { url, referrer, coo, origin } = req.body;
 
   // Determine the tracking URL based on the origin
-  const responseUrl =
-    trackingUrls[origin] || "https://tracktraffics.com";
+  // const responseUrl =
+  //   trackingUrls[origin] || "https://tracktraffics.com";
 
   try {
+    const responseUrl = await getAffiliateUrlByHostNameFind(origin,'HostName');
+    console.log('Affiliate URL:', responseUrl);
     // Send a JSON response with the determined URL
     res.json({ url: responseUrl });
    
@@ -226,7 +228,7 @@ app.post("/api/datascript", async (req, res) => {
   // trackingUrls[origin] || "https://tracktraffics.com";
 
   try {
-    const affiliateData = await getAffiliateUrlByHostNameFind(origin,'Tracking');
+    const affiliateData = await getAffiliateUrlByHostNameFind(origin,'HostName');
     console.log('Affiliate URL:', affiliateData);
   
     res.json({name:'optimistix',url:affiliateData});
@@ -370,6 +372,7 @@ app.post('/api/proxy', async (req, res) => {
 
 
 app.use(express.static(path.join(__dirname, "public")));
+
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
