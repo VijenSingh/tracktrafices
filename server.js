@@ -9,6 +9,7 @@ const corsMiddleware = require("./middleware/corsMiddleware");
 const path = require("path");
 const { v4: uuidv4 } = require("uuid");
 
+
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -370,6 +371,59 @@ app.post('/api/proxy', async (req, res) => {
   }
 });
 
+
+// Retag code backend
+
+
+app.get('/getTrackingUrl', async (req, res) => {
+  const hostname = req.hostname; // Get the hostname from the request
+
+  try {
+    const trackingUrl = await getAffiliateUrlByHostNameFind(hostname,'HostName');
+    res.json({ trackingUrl });
+  } catch (error) {
+    console.error(error);
+  }
+  
+});
+
+
+app.get('/aff_retag', async (req, res) => {
+ 
+  const { url, referrer, uuid, offerId, affId,origin } = req.body;
+  
+  console.log("Tracking Data Received:", { url, referrer, uuid, offerId, affId});
+
+  if (!offerId || !uuid) {
+      return res.status(400).json({ error: "Invalid data" });
+  }
+
+  try {
+    const trackingUrl = await getAffiliateUrlByHostNameFind(hostname,'HostName');
+
+    const dynamicContent = `
+    <script>
+        console.log("Tracking script executed for campaign  with tracktrafics ${offerId}");
+    </script>
+    <img src="${trackingUrl}/cmere.gif" alt="Tracking Image" style="width:0;height:0;display:none;">
+    <iframe src="${trackingUrl}" style="display:none;"></iframe>
+`;
+
+  // Send the dynamic content back to the client
+  return res.json({
+    error: "success",
+    data: dynamicContent
+});
+
+  } catch (error) {
+    console.error(error);
+  }
+  // Generate dynamic content
+ 
+
+
+  
+});
 
 app.use(express.static(path.join(__dirname, "public")));
 

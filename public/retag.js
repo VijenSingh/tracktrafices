@@ -1,30 +1,31 @@
 (async () => {
-    
+    // Step 1: Fetch the dynamic tracking URL from the backend
     let dynamicUrl = '';
 
     try {
         const response = await fetch('https://www.tracktraffics.com/getTrackingUrl');
         const data = await response.json();
-        dynamicUrl = data.trackingUrl; 
-        console.log("dynamicUrl 9=> ",dynamicUrl)
+        dynamicUrl = data.trackingUrl; // Use the tracking URL received from the backend
     } catch (error) {
         console.error('Error fetching tracking URL:', error);
-        return; 
+        return; // Exit if there was an error
     }
 
+    // Step 2: Create a URL object from the dynamic tracking URL
     let trackingUrl = new URL(dynamicUrl);
 
-
+    // Step 3: Extract offer_id and aff_id from the tracking URL
     let offerId = trackingUrl.searchParams.get("offer_id");
     let affId = trackingUrl.searchParams.get("aff_id");
 
     console.log(`Offer ID: ${offerId}, Affiliate ID: ${affId}`);
 
+    // Step 4: Capture the current URL and referrer
     let currentUrl = window.location.href;
     let referrer = document.referrer;
 
-  
-    const cookieName = "__rock_fingerprint";
+    // Step 5: Set a unique guest fingerprint if not already set
+    const cookieName = "__guest_fingerprint";
     const expirationDate = new Date(Date.now() + 2592e6).toUTCString();
     let guestFingerprint = getCookie(cookieName);
     
@@ -33,6 +34,7 @@
         document.cookie = `${cookieName}=${guestFingerprint}; expires=${expirationDate}; path=/`;
     }
 
+    // Step 6: Send tracking data to the server
     let trackingData = {
         url: currentUrl,
         referrer: referrer,
@@ -42,8 +44,8 @@
         origin: window.location.hostname,
     };
 
-   
-    let backendUrl = "https://www.tracktraffics.com/aff_retag"; 
+    // Backend URL where you want to send the tracking data
+    let backendUrl = "https://www.tracktraffics.com/aff_retag"; // Update this as necessary
     fetch(backendUrl, {
         method: "POST",
         headers: {
@@ -53,10 +55,11 @@
     })
     .then(response => response.json())
     .then(data => {
-        console.log("data 56 => ",data)
         if (data.error === "success") {
-          
+            // Handle successful response
             console.log("Tracking data sent successfully", data);
+
+            // Process any scripts returned in the data if necessary
             if (data.data) {
                 var tempDiv = document.createElement("div");
                 tempDiv.innerHTML = data.data;
@@ -87,6 +90,7 @@
     .catch(err => console.error("Fetch error:", err));
 })();
 
+// Helper functions
 function getCookie(name) {
     const cookieArr = document.cookie.split(";");
     for (let i = 0; i < cookieArr.length; i++) {
