@@ -127,6 +127,7 @@ const trackingUrls = {
   'www.matahari.com' : 'https://invle.co/cllq3gg',
   'www.wondergifts.ae':'https://clk.omgt4.com/?PID=56022&AID=2103072',
   'www.scienceandhumans.com':'https://nomadz.gotrackier.com/click?campaign_id=4647&pub_id=47',
+  'storeus.com' : 'https://clk.omgt4.com/?PID=54859&AID=2356115',
     
 
 };
