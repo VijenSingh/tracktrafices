@@ -128,6 +128,10 @@ const trackingUrls = {
   'www.wondergifts.ae':'https://clk.omgt4.com/?PID=56022&AID=2103072',
   'www.scienceandhumans.com':'https://nomadz.gotrackier.com/click?campaign_id=4647&pub_id=47',
   'storeus.com' : 'https://clk.omgt4.com/?PID=54859&AID=2356115',
+  'my.trapo.asia': ' https://invle.co/cllqv1g',
+  'tedbaker.ae' : 'https://clk.omgt4.com/?PID=55760&AID=2103072',
+  'www.justherbs.in' : 'https://tracking.kiyaanservices.com/clk?offer_id=2591&aff_id=86',
+
     
 
 };
